@@ -6,8 +6,15 @@ class AccountsController < ApplicationController
   end
 
   def create
-    player = Player.new(account_new_params)
-    unless player.save
+    # TODO: password encrypt
+    if params[:accounts][:password] != params[:accounts][:password_repeat]
+      return redirect_back(fallback_location: accounts_new_path)
+    end
+
+    player = Player.new(account_params)
+
+    unless player.valid? || player.save
+      # TODO: flash notice error message
       return redirect_to :back
     end
 
@@ -15,26 +22,26 @@ class AccountsController < ApplicationController
   end
 
   def login
-    player = Player.find_by(account_login_params)
+    player = Player.find_by(account_params)
 
     if player.nil?
+      # TODO: flash notice error message
       return redirect_to action: 'index'
     end
 
     session[:player_id] = player.id
+
+    redirect_to action: 'index'
   end
 
   def logout
     reset_session
+    redirect_to action: 'index'
   end
 
   private
 
-  def account_new_params
-    params.require(:account).permit(:username, :password, :password_repeat)
-  end
-
-  def account_login_params
-    params.require(:account).permit(:username, :password)
+  def account_params
+    params.require(:accounts).permit(:username, :password)
   end
 end
