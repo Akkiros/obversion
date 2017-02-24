@@ -1,0 +1,7 @@
+<%= form_tag({controller: 'accounts', action: 'create'}) do %>
+  <%= text_field_tag :username, '', placeholder: 'username' %>
+  <%= password_field_tag :password, '', placeholder: 'password' %>
+  <%= password_field_tag :password_repeat, '', placeholder: 'password_repeat' %>
+  <%= submit_tag %>
+<% end %>
+
