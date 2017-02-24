@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  game_data: 
+  start_time: 2017-02-24 21:55:21
+
+two:
+  game_data: 
+  start_time: 2017-02-24 21:55:21
