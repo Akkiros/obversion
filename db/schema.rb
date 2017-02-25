@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 20170224085521) do
     t.datetime "updated_at",                               null: false
     t.index ["game_id"], name: "index_game_players_on_game_id", using: :btree
     t.index ["player_id"], name: "index_game_players_on_player_id", using: :btree
-    t.index ["status", "player_id", "game_id"], name: "index_game_players_on_status_and_player_id_and_game_id", unique: true, using: :btree
   end
 
   create_table "games", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
