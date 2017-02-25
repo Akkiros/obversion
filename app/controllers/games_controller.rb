@@ -36,7 +36,6 @@ class GamesController < ApplicationController
   end
 
   def start
-    # TODO: if game is not full, return
     game = Game.find_by(id: params[:game_id])
     unless game.full?
       puts 'not full'

@@ -22,10 +22,11 @@ ActiveRecord::Schema.define(version: 20170224085521) do
   end
 
   create_table "game_players", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer  "player_id",  null: false
-    t.integer  "game_id",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "status",     limit: 16, default: "joined", null: false
+    t.integer  "player_id",                                null: false
+    t.integer  "game_id",                                  null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.index ["game_id"], name: "index_game_players_on_game_id", using: :btree
     t.index ["player_id"], name: "index_game_players_on_player_id", using: :btree
   end
