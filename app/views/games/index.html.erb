@@ -1,3 +1,4 @@
+<%= link_to 'New', games_new_path %> <br />
 <% @games.each do |game| %>
   <%= link_to game.id, games_show_path(game_id: game.id) %>
 <% end %>
