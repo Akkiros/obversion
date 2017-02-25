@@ -30,9 +30,19 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find_by(id: params[:game_id])
+    game_players = @game.game_players
+    @game_player_first_id = game_players.first ? game_players.first.player_id : 'not yet'
+    @game_player_last_id = game_players.last ? game_players.last.player_id : 'not yet'
   end
 
   def start
     # TODO: if game is not full, return
+    game = Game.find_by(id: params[:game_id])
+    unless game.full?
+      puts 'not full'
+      return redirect_back(fallback_location: games_show_path(game_id: game.id))
+    end
+
+    game.start
   end
 end
