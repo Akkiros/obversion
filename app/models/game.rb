@@ -24,4 +24,11 @@ class Game < ApplicationRecord
   def active_player_count
     self.game_players.where(status: 'joined').count
   end
+
+  def active_player_ids
+    active_players = self.game_players.where(status: 'joined')
+    active_players.map { |data|
+      data.player_id
+    }
+  end
 end

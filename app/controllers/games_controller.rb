@@ -65,6 +65,13 @@ class GamesController < ApplicationController
 
     player.leave_game(game.id)
 
+    ActionCable.server.broadcast(
+      "games/#{game.id}",
+      status: 'leave',
+      player_id: player.id,
+      active_player_ids: game.active_player_ids,
+      current_player_count: game.active_player_count
+    )
     redirect_to games_path
   end
 

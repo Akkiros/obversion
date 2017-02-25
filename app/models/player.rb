@@ -12,6 +12,6 @@ class Player < ApplicationRecord
   end
 
   def leave_game(game_id)
-    self.game_players.where(game_id: game_id).update(status: 'leave')
+    self.game_players.where(game_id: game_id, status: 'joined').first.update(status: 'leave')
   end
 end

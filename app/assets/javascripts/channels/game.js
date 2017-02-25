@@ -8,10 +8,15 @@ var Game = {
     }
   },
   leave: function(response) {
-    console.log(response);
+    console.log('leave');
+    // 0명일땐 방 폭파
+    if (response.current_player_count == 1) {
+      $('#first_player > .player_id').text(response.active_player_ids[0]);
+      $('#last_player > .player_id').text('not yet');
+    }
   },
   start: function(response) {
-    console.log(response);
+    console.log('start');
   }
 }
 App.messages = App.cable.subscriptions.create({ channel: 'GameChannel', game_id: $("#game_id").val() }, {
@@ -20,6 +25,12 @@ App.messages = App.cable.subscriptions.create({ channel: 'GameChannel', game_id:
     console.log(data);
     if (data.status === 'join') {
       Game.join(data);
+    } else if (data.status === 'leave') {
+      Game.leave(data);
+    } else if (data.status === 'start') {
+      Game.start(data);
+    } else {
+      console.log('i dont understant this status' + data.status);
     }
     //$("#messages").removeClass('hidden')
       //return $('#messages').append(this.renderMessage(data));
