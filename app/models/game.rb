@@ -31,4 +31,8 @@ class Game < ApplicationRecord
       data.player_id
     }
   end
+
+  def self.test
+    puts "hi"
+  end
 end

@@ -1,3 +1,5 @@
+require 'queue_classic'
+
 class GamesController < ApplicationController
   def index
     @games = Game.all
@@ -102,6 +104,8 @@ class GamesController < ApplicationController
     # TODO: 해당 게임에 속한 플레이어인지 체크
 
     game.start
+
+    QC::enqueue_in(60, "Game.test")
 
     ActionCable.server.broadcast(
       "games/#{game.id}",
