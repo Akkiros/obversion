@@ -2,8 +2,12 @@ Id : <%= @game.id %> <br />
 Status : <%= @game.status %> <br />
 
 <%# TODO: 한명만 있을땐 한명만 보이게 처리 %>
-Player 1 : <%= @game_player_first_id %> <br />
-Player 2 : <%= @game_player_last_id %> <br />
+<div class='player' id='first_player'>
+  Player 1 : <span class='player_id'><%= @game_player_first_id %></span> <br />
+</div>
+<div class='player' id='last_player'>
+  Player 2 : <span class='player_id'><%= @game_player_last_id %></span> <br />
+</div>
 
 <%# TODO: if game is full, hide below %>
 <%= form_tag games_join_path do %>

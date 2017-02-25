@@ -20,4 +20,8 @@ class Game < ApplicationRecord
     self.update(status: 'started')
     self.game_histories.create(game_data: {status: 'started'}, start_time: Time.now)
   end
+
+  def active_player_count
+    self.game_players.where(status: 'joined').count
+  end
 end
