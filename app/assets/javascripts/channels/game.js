@@ -19,6 +19,7 @@ var Game = {
     console.log('started');
   }
 }
+
 App.messages = App.cable.subscriptions.create(
   {
     channel: 'GameChannel',

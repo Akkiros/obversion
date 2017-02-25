@@ -94,12 +94,19 @@ class GamesController < ApplicationController
       return redirect_back(fallback_location: games_show_path(game_id: game.id))
     end
 
+    if game.started?
+      puts 'this game is already started'
+      head :ok
+    end
+
+    # TODO: 해당 게임에 속한 플레이어인지 체크
+
     game.start
 
     ActionCable.server.broadcast(
       "games/#{game.id}",
       status: 'started',
-      start_time: Time.now
+      remain_time: 60
     )
   end
 
