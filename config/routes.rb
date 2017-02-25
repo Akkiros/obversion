@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
+
   get '/accounts/' => 'accounts#index'
   get '/accounts/new' => 'accounts#new'
   post '/accounts/create' => 'accounts#create'
