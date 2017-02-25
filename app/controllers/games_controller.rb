@@ -105,20 +105,12 @@ class GamesController < ApplicationController
 
     game.start
 
-    QC::enqueue_in(60, "Game.finish", "#{game.id}")
-
     ActionCable.server.broadcast(
       "games/#{game.id}",
       status: 'started',
       remain_time: 60
     )
-  end
 
-  def ping
-    ActionCable.server.broadcast(
-      "games/#{params[:game_id]}",
-      message: 'test'
-    )
-    head :ok
+    QC::enqueue_in(60, "Game.finish", "#{game.id}")
   end
 end
