@@ -32,7 +32,10 @@ class Game < ApplicationRecord
     }
   end
 
-  def self.test
-    puts "hi"
+  def self.finish(game_id)
+    ActionCable.server.broadcast(
+      "games/#{game_id}",
+      status: 'finished',
+    )
   end
 end

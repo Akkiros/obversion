@@ -38,6 +38,9 @@ var Game = {
       $('#remain_time > #count').text(remain_time);
 
     }
+  },
+  finish: function(response) {
+    $('#status > span').text(response.status);
   }
 }
 
@@ -56,6 +59,8 @@ App.messages = App.cable.subscriptions.create(
         Game.leave(data);
       } else if (data.status === 'started') {
         Game.start(data);
+      } else if (data.status === 'finished') {
+        Game.finish(data);
       } else {
         console.log('i dont understant this status' + data.status);
       }

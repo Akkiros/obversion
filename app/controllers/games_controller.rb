@@ -105,7 +105,7 @@ class GamesController < ApplicationController
 
     game.start
 
-    QC::enqueue_in(60, "Game.test")
+    QC::enqueue_in(60, "Game.finish", "#{game.id}")
 
     ActionCable.server.broadcast(
       "games/#{game.id}",
