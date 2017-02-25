@@ -15,7 +15,7 @@ class AccountsController < ApplicationController
 
     unless player.valid? || player.save
       # TODO: flash notice error message
-      return redirect_to :back
+      return redirect_back(fallback_location: accounts_new_path)
     end
 
     redirect_to action: 'index'
