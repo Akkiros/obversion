@@ -1,9 +1,18 @@
 Id : <%= @game.id %> <br />
 Status : <%= @game.status %> <br />
+
+<%# TODO: 한명만 있을땐 한명만 보이게 처리 %>
 Player 1 : <%= @game.game_players.first.id %> <br />
 Player 2 : <%= @game.game_players.last.id %> <br />
 
+<%# TODO: if game is full, hide below %>
 <%= form_tag games_join_path do %>
   <%= hidden_field_tag 'game_id', @game.id %>
-  <%= submit_tag %>
+  <%= submit_tag 'join' %>
+<% end %>
+
+<%# TODO: if game is not full, disable this %>
+<%= form_tag games_start_path do %>
+  <%= hidden_field_tag 'game_id', @game.id %>
+  <%= submit_tag 'game start' %>
 <% end %>

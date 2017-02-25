@@ -19,10 +19,11 @@ class GamesController < ApplicationController
     game = Game.find_by(id: params[:game_id])
     player = Player.find_by(id: session[:player_id])
 
+    # TODO : check game is full
     game.game_players.create(player: player)
 
 
-    # TODO: if game is nil
+    # TODO: if game or player is nil
 
     redirect_to action: 'show', game_id: game.id
   end
@@ -32,5 +33,6 @@ class GamesController < ApplicationController
   end
 
   def start
+    # TODO: if game is not full, return
   end
 end
