@@ -42,14 +42,12 @@ class GamesController < ApplicationController
     # TODO: make status to constant
     game.game_players.create(player: player, status: 'joined')
 
-    # TODO: broadcast data to consumers
     ActionCable.server.broadcast(
       "games/#{game.id}",
       status: 'join',
       player_id: player.id,
       current_player_count: game.active_player_count
     )
-    #redirect_to action: 'show', game_id: game.id
   end
 
   def leave
