@@ -79,6 +79,15 @@ class GamesController < ApplicationController
     end
 
     game.start
+    render json: game.game_histories.last.game_data.to_json
     # TODO: broadcast data to consumers
+  end
+
+  def ping
+    ActionCable.server.broadcast(
+      "games/#{params[:game_id]}",
+      message: 'test'
+    )
+    head :ok
   end
 end

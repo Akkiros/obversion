@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   post '/games/leave' => 'games#leave'
   get '/games/show' => 'games#show'
   post '/games/start' => 'games#start'
+  post '/games/ping' => 'games#ping'
 end
