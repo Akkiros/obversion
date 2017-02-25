@@ -1,5 +1,6 @@
 Id : <%= @game.id %> <br />
-Status : <%= @game.status %> <br />
+<div id='status'>Status : <span><%= @game.status %></div></div> <br />
+<div id='remain_time'>Remain Time : <span id='count'></span></div>
 
 <%# TODO: 한명만 있을땐 한명만 보이게 처리 %>
 <div class='player' id='first_player'>

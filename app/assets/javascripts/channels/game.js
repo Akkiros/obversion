@@ -1,6 +1,7 @@
 var Game = {
   join: function(response) {
     console.log('joined');
+
     if (response.current_player_count == 1) {
       $('#first_player > .player_id').text(response.player_id);
     } else {
@@ -9,6 +10,7 @@ var Game = {
   },
   leave: function(response) {
     console.log('leaved');
+
     // 0명일땐 방 폭파
     if (response.current_player_count == 1) {
       $('#first_player > .player_id').text(response.active_player_ids[0]);
@@ -17,6 +19,25 @@ var Game = {
   },
   start: function(response) {
     console.log('started');
+
+    $('#status > span').text(response.status);
+
+    remain_time = response.remain_time;
+    $('#remain_time > #count').text(remain_time);
+
+    interval = setInterval(tick, 1000);
+
+    function tick() {
+      console.log(remain_time);
+      remain_time -= 1;
+
+      if (remain_time <= 0) {
+        clearInterval(interval);
+      }
+
+      $('#remain_time > #count').text(remain_time);
+
+    }
   }
 }
 
