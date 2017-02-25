@@ -31,7 +31,7 @@ class AccountsController < ApplicationController
 
     session[:player_id] = player.id
 
-    redirect_to action: 'index'
+    redirect_to controller: 'games', action: 'index'
   end
 
   def logout
