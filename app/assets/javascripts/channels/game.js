@@ -20,11 +20,12 @@ var Game = {
   start: function(response) {
     console.log('started');
 
-    $('#status > span').text(response.status);
+    this.changeStatus(response.status);
 
     remain_time = response.remain_time;
     $('#remain_time > #count').text(remain_time);
 
+    // TODO : 이 부분 서버로 이동
     interval = setInterval(tick, 1000);
 
     function tick() {
@@ -40,7 +41,10 @@ var Game = {
     }
   },
   finish: function(response) {
-    $('#status > span').text(response.status);
+    this.changeStatus(response.status);
+  },
+  changeStatus: function(game_status) {
+    $('#status > span').text(game_status);
   }
 }
 
