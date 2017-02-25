@@ -95,6 +95,12 @@ class GamesController < ApplicationController
     end
 
     game.start
+
+    ActionCable.server.broadcast(
+      "games/#{game.id}",
+      status: 'started',
+      start_time: Time.now
+    )
   end
 
   def ping
