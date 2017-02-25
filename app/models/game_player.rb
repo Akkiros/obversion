@@ -5,6 +5,5 @@ class GamePlayer < ApplicationRecord
   validates :status, presence: true
   validates :player_id, presence: true
   validates :game_id, presence: true
-
-  # TODO: add unique check game_id, player_id and status
+  validates_uniqueness_of :status, scope: [:player_id, :game_id]
 end

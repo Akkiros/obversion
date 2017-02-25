@@ -39,6 +39,7 @@ class GamesController < ApplicationController
       return redirect_to action: 'index'
     end
 
+    # TODO: make status to constant
     game.game_players.create(player: player, status: 'joined')
 
     redirect_to action: 'show', game_id: game.id
