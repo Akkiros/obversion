@@ -29,6 +29,11 @@ class GamesController < ApplicationController
       return redirect_to accounts_path
     end
 
+    if player.already_joined?(game.id)
+      puts 'player already joined'
+      return redirect_to games_path
+    end
+
     if game.full?
       puts 'full'
       return redirect_to action: 'index'

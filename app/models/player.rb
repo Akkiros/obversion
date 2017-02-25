@@ -11,6 +11,10 @@ class Player < ApplicationRecord
     Digest::SHA256.hexdigest(password)
   end
 
+  def already_joined?(game_id)
+    self.game_players.where(game_id: game_id, status: 'joined').count > 0
+  end
+
   def leave_game(game_id)
     self.game_players.where(game_id: game_id, status: 'joined').first.update(status: 'leaved')
   end
