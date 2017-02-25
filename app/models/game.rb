@@ -11,5 +11,6 @@ class Game < ApplicationRecord
 
   def start
     self.update(status: 'playing')
+    self.game_histories.create(game_data: {status: 'start'}, start_time: Time.now)
   end
 end
