@@ -44,7 +44,7 @@ class GamesController < ApplicationController
 
     ActionCable.server.broadcast(
       "games/#{game.id}",
-      status: 'join',
+      status: 'joined',
       player_id: player.id,
       current_player_count: game.active_player_count
     )
@@ -65,7 +65,7 @@ class GamesController < ApplicationController
 
     ActionCable.server.broadcast(
       "games/#{game.id}",
-      status: 'leave',
+      status: 'leaved',
       player_id: player.id,
       active_player_ids: game.active_player_ids,
       current_player_count: game.active_player_count
@@ -90,8 +90,6 @@ class GamesController < ApplicationController
     end
 
     game.start
-    render json: game.game_histories.last.game_data.to_json
-    # TODO: broadcast data to consumers
   end
 
   def ping
