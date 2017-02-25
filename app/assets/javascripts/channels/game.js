@@ -19,18 +19,24 @@ var Game = {
     console.log('started');
   }
 }
-App.messages = App.cable.subscriptions.create({ channel: 'GameChannel', game_id: $("#game_id").val() }, {
-  received: function(data) {
-    console.log('received');
-    console.log(data);
-    if (data.status === 'joined') {
-      Game.join(data);
-    } else if (data.status === 'leaved') {
-      Game.leave(data);
-    } else if (data.status === 'started') {
-      Game.start(data);
-    } else {
-      console.log('i dont understant this status' + data.status);
-    }
+App.messages = App.cable.subscriptions.create(
+  {
+    channel: 'GameChannel',
+    game_id: $("#game_id").val()
   },
-});
+  {
+    received: function(data) {
+      console.log('received');
+      console.log(data);
+      if (data.status === 'joined') {
+        Game.join(data);
+      } else if (data.status === 'leaved') {
+        Game.leave(data);
+      } else if (data.status === 'started') {
+        Game.start(data);
+      } else {
+        console.log('i dont understant this status' + data.status);
+      }
+    },
+  }
+);
