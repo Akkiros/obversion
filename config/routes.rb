@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get '/games/' => 'games#index'
   get '/games/new' => 'games#new'
   post '/games/create' => 'games#create'
-  get '/games/join' => 'games#join'
+  post '/games/join' => 'games#join'
   get '/games/show' => 'games#show'
   post '/games/start' => 'games#start'
 end

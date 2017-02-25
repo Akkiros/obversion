@@ -1,2 +1,9 @@
-Id : <%= @game.id %>
-Status : <%= @game.status %>
+Id : <%= @game.id %> <br />
+Status : <%= @game.status %> <br />
+Player 1 : <%= @game.game_players.first.id %> <br />
+Player 2 : <%= @game.game_players.last.id %> <br />
+
+<%= form_tag games_join_path do %>
+  <%= hidden_field_tag 'game_id', @game.id %>
+  <%= submit_tag %>
+<% end %>
