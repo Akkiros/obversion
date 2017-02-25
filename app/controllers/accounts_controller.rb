@@ -19,7 +19,6 @@ class AccountsController < ApplicationController
     puts player.errors.messages
     # TODO: flash notice error message
     return redirect_back(fallback_location: accounts_new_path)
-
   end
 
   def login

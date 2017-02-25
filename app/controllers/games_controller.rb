@@ -42,14 +42,31 @@ class GamesController < ApplicationController
     # TODO: make status to constant
     game.game_players.create(player: player, status: 'joined')
 
+    # TODO: broadcast data to consumers
     redirect_to action: 'show', game_id: game.id
+  end
+
+  def leave
+    game = Game.find_by(id: params[:game_id])
+    player = Player.find_by(id: session[:player_id])
+
+    # TODO: check player is now joined status in this game?
+
+    if game.started?
+      puts 'game is already started!'
+      return
+    end
+
+    player.leave_game(game.id)
+
+    redirect_to games_path
   end
 
   def show
     @game = Game.find_by(id: params[:game_id])
 
     # TODO: refactor this
-    game_players = @game.game_players
+    game_players = @game.game_players.where(status: 'joined')
     @game_player_first_id = game_players.first ? game_players.first.player_id : 'not yet'
     @game_player_last_id = game_players.last ? game_players.last.player_id : 'not yet'
   end
@@ -62,5 +79,6 @@ class GamesController < ApplicationController
     end
 
     game.start
+    # TODO: broadcast data to consumers
   end
 end

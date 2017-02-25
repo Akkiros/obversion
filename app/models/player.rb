@@ -10,4 +10,8 @@ class Player < ApplicationRecord
   def self.encrypt_password(password)
     Digest::SHA256.hexdigest(password)
   end
+
+  def leave_game(game_id)
+    self.game_players.where(game_id: game_id).update(status: 'leave')
+  end
 end

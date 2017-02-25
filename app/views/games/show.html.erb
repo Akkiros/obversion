@@ -16,3 +16,8 @@ Player 2 : <%= @game_player_last_id %> <br />
   <%= hidden_field_tag 'game_id', @game.id %>
   <%= submit_tag 'game start' %>
 <% end %>
+
+<%= form_tag games_leave_path do %>
+  <%= hidden_field_tag 'game_id', @game.id %>
+  <%= submit_tag 'game leave' %>
+<% end %>
