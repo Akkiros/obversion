@@ -1,6 +1,5 @@
 <%= form_for(:accounts, url: accounts_create_path) do |f| %>
   <%= f.text_field :username, placeholder: 'username' %>
   <%= f.password_field :password, placeholder: 'password' %>
-  <%= f.password_field :password_repeat, placeholder: 'password_repeat' %>
   <%= f.submit %>
 <% end %>
