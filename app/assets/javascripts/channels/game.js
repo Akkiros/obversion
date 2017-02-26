@@ -1,5 +1,7 @@
 var Game = {
   init: function() {
+    console.log('init');
+
     var game_size = 10;
     var game_data = '';
 
@@ -10,6 +12,7 @@ var Game = {
       }
       game_data += "</div>";
     }
+
     $('.game_board').append(game_data);
   },
   join: function(response) {
@@ -50,7 +53,6 @@ var Game = {
       }
 
       $('#remain_time > #count').text(remain_time);
-
     }
   },
   play: function(response) {
@@ -77,6 +79,7 @@ $('.game_board > .tiles > .tile').click(function() {
       x: $(_this).data('x'),
       y: $(_this).data('y')
     },
+    // fail 체크
     success: function(response) {
       console.log(response);
     }
