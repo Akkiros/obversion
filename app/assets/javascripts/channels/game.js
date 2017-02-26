@@ -1,6 +1,16 @@
 var Game = {
   init: function() {
-    $('.game_board').append("<div class='tile' style='width: 20px; height: 20px; background: black;'></div>");
+    var game_size = 10;
+    var game_data = '';
+
+    for (var i = 0; i < game_size; i++) {
+      game_data += "<div class='tiles' style='display: flex;'>";
+      for (var j = 0; j < game_size; j++) {
+        game_data += "<div class='tile' style='width: 20px; height: 20px; background: black; display: inline-block;' data-x=" + i + " data-y=" + j + "></div>";
+      }
+      game_data += "</div>";
+    }
+    $('.game_board').append(game_data);
   },
   join: function(response) {
     console.log('joined');
@@ -44,7 +54,7 @@ var Game = {
     }
   },
   play: function(response) {
-    console.log(response);
+    $('.game_board > .tiles:eq(' + response.game_data.x + ') > .tile:eq(' + response.game_data.y + ')').css('background', response.color);
   },
   finish: function(response) {
     this.changeStatus(response.status);
@@ -56,15 +66,16 @@ var Game = {
 
 Game.init();
 
-$('.game_board > .tile').click(function() {
+$('.game_board > .tiles > .tile').click(function() {
   console.log(this);
+  var _this = this;
   $.ajax({
     method: 'POST',
     url: '/games/click',
     data: {
       game_id: $('#game_id').val(),
-      x: 0,
-      y: 0
+      x: $(_this).data('x'),
+      y: $(_this).data('y')
     },
     success: function(response) {
       console.log(response);

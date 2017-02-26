@@ -131,9 +131,12 @@ class GamesController < ApplicationController
       return
     end
 
+    color = game.active_player_ids.index(session[:player_id]) == 1 ? 'red' : 'blue'
+
     ActionCable.server.broadcast(
       "games/#{game.id}",
       status: 'playing',
+      color: color,
       game_data: {
         x: params[:x],
         y: params[:y]
