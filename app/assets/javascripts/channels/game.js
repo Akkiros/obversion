@@ -1,4 +1,7 @@
 var Game = {
+  init: function() {
+    $('.game_board').append("<div class='tile' style='width: 20px; height: 20px; background: black;'></div>");
+  },
   join: function(response) {
     console.log('joined');
 
@@ -40,6 +43,9 @@ var Game = {
 
     }
   },
+  play: function(response) {
+    console.log(response);
+  },
   finish: function(response) {
     this.changeStatus(response.status);
   },
@@ -47,6 +53,24 @@ var Game = {
     $('#status > span').text(game_status);
   }
 }
+
+Game.init();
+
+$('.game_board > .tile').click(function() {
+  console.log(this);
+  $.ajax({
+    method: 'POST',
+    url: '/games/click',
+    data: {
+      game_id: $('#game_id').val(),
+      x: 0,
+      y: 0
+    },
+    success: function(response) {
+      console.log(response);
+    }
+  });
+});
 
 App.messages = App.cable.subscriptions.create(
   {
@@ -63,6 +87,8 @@ App.messages = App.cable.subscriptions.create(
         Game.leave(data);
       } else if (data.status === 'started') {
         Game.start(data);
+      } else if (data.status === 'playing') {
+        Game.play(data);
       } else if (data.status === 'finished') {
         Game.finish(data);
       } else {

@@ -15,6 +15,10 @@ class Game < ApplicationRecord
     self.status == 'started'
   end
 
+  def finished?
+    self.status == 'finished'
+  end
+
   def start
     # TODO: make status to constant
     self.update(status: 'started')

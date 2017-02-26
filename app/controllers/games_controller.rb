@@ -113,4 +113,33 @@ class GamesController < ApplicationController
 
     QC::enqueue_in(60, "Game.finish", "#{game.id}")
   end
+
+  def click
+    puts params[:x]
+    puts params[:y]
+
+    game = Game.find_by(id: params[:game_id])
+
+    # TODO: 상태 체크
+    if game.nil?
+      puts 'game is nil'
+      return
+    end
+
+    if game.finished?
+      puts 'game is already over'
+      return
+    end
+
+    ActionCable.server.broadcast(
+      "games/#{game.id}",
+      status: 'playing',
+      game_data: {
+        x: params[:x],
+        y: params[:y]
+      }
+    )
+
+    render json: {success: true}
+  end
 end
