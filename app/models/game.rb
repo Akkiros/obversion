@@ -6,31 +6,33 @@ class Game < ApplicationRecord
   validates :status, presence: true, length: { maximum: 16 }
 
   def full?
-    # TODO: make status to constant
-    self.game_players.where(status: 'joined').count == 2
+    self.game_players.where(status: GameConstant::STATUS_JOINED).count == 2
   end
 
   def started?
-    # TODO: make status to constant
-    self.status == 'started'
+    self.status == GameConstant::STATUS_STARTED
   end
 
   def finished?
-    self.status == 'finished'
+    self.status == GameConstant::STATUS_FINISHED
   end
 
   def start
-    # TODO: make status to constant
-    self.update(status: 'started')
-    self.game_histories.create(game_data: {status: 'started'}, start_time: Time.now)
+    self.update(status: GameConstant::STATUS_STARTED)
+    self.game_histories.create(
+      game_data: {
+        status: GameConstant::STATUS_STARTED
+      },
+      start_time: Time.now
+    )
   end
 
   def active_player_count
-    self.game_players.where(status: 'joined').count
+    self.game_players.where(status: GameConstant::STATUS_JOINED).count
   end
 
   def active_player_ids
-    active_players = self.game_players.where(status: 'joined')
+    active_players = self.game_players.where(status: GameConstant::STATUS_JOINED)
     active_players.map { |data|
       data.player_id
     }
@@ -39,7 +41,7 @@ class Game < ApplicationRecord
   def self.finish(game_id)
     ActionCable.server.broadcast(
       "games/#{game_id}",
-      status: 'finished',
+      status: GameConstant::STATUS_FINISHED,
     )
   end
 end

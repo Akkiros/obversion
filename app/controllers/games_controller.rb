@@ -9,8 +9,7 @@ class GamesController < ApplicationController
   end
 
   def create
-    # TODO: make status to constant
-    game = Game.new(status: 'new')
+    game = Game.new(status: GameConstant::STATUS_NEW)
 
     if game.save
       return redirect_to action: 'show', game_id: game.id
@@ -46,12 +45,11 @@ class GamesController < ApplicationController
       return redirect_to action: 'index'
     end
 
-    # TODO: make status to constant
-    game.game_players.create(player: player, status: 'joined')
+    game.game_players.create(player: player, status: GameConstant::STATUS_JOINED)
 
     ActionCable.server.broadcast(
       "games/#{game.id}",
-      status: 'joined',
+      status: GameConstant::STATUS_JOINED,
       player_id: player.id,
       current_player_count: game.active_player_count
     )
@@ -72,7 +70,7 @@ class GamesController < ApplicationController
 
     ActionCable.server.broadcast(
       "games/#{game.id}",
-      status: 'leaved',
+      status: GameConstant::STATUS_LEAVED,
       player_id: player.id,
       active_player_ids: game.active_player_ids,
       current_player_count: game.active_player_count
@@ -107,7 +105,7 @@ class GamesController < ApplicationController
 
     ActionCable.server.broadcast(
       "games/#{game.id}",
-      status: 'started',
+      status: GameConstant::STATUS_STARTED,
       remain_time: 60
     )
 
@@ -131,11 +129,11 @@ class GamesController < ApplicationController
       return
     end
 
-    color = game.active_player_ids.index(session[:player_id]) == 1 ? 'red' : 'blue'
+    color = game.active_player_ids.index(session[:player_id]) == 1 ? GameConstant::COLOR_RED : GameConstant::COLOR_BLUE
 
     ActionCable.server.broadcast(
       "games/#{game.id}",
-      status: 'playing',
+      status: GameConstant::STATUS_PLAYING,
       color: color,
       game_data: {
         x: params[:x],

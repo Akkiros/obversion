@@ -12,10 +12,17 @@ class Player < ApplicationRecord
   end
 
   def already_joined?(game_id)
-    self.game_players.where(game_id: game_id, status: 'joined').count > 0
+    self.game_players.where(
+      game_id: game_id,
+      status: GameConstant::STATUS_JOINED
+    ).count > 0
   end
 
   def leave_game(game_id)
-    self.game_players.where(game_id: game_id, status: 'joined').first.update(status: 'leaved')
+    self.game_players.where(
+      game_id: game_id,
+      status: GameConstant::STATUS_JOINED
+    ).first
+    .update(status: GameConstant::STATUS_LEAVED)
   end
 end
