@@ -56,6 +56,7 @@ var Game = {
     }
   },
   play: function(response) {
+    console.log(response);
     $('.game_board > .tiles:eq(' + response.game_data.x + ') > .tile:eq(' + response.game_data.y + ')').css('background', response.color);
   },
   finish: function(response) {

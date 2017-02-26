@@ -13,6 +13,10 @@ class Game < ApplicationRecord
     self.status == GameConstant::STATUS_STARTED
   end
 
+  def playing?
+    self.status == GameConstant::STATUS_PLAYING
+  end
+
   def finished?
     self.status == GameConstant::STATUS_FINISHED
   end
@@ -39,6 +43,8 @@ class Game < ApplicationRecord
   end
 
   def self.finish(game_id)
+    game = Game.find_by(id: game_id)
+    game.update(status: GameConstant::STATUS_FINISHED)
     ActionCable.server.broadcast(
       "games/#{game_id}",
       status: GameConstant::STATUS_FINISHED,
