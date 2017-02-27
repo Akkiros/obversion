@@ -139,11 +139,25 @@ class GameService
     new_matrix = JSON.parse(last_game_history.game_data)['matrix']
     new_matrix[x.to_i][y.to_i] = color_key
 
+    score = {
+      '0': 0,
+      '1': 0
+    }
+    new_matrix.count.times do |i|
+      new_matrix.count.times do |j|
+        score[0.to_s.to_sym] += 1 if new_matrix[i][j] == 0
+        score[1.to_s.to_sym] += 1 if new_matrix[i][j] == 1
+      end
+    end
+
+    puts score
+
     game.game_histories.create(
       start_time: last_game_history.start_time,
       game_data: {
         status: GameConstant::STATUS_PLAYING,
-        matrix: new_matrix
+        matrix: new_matrix,
+        score: score
       }.to_json
     )
 
@@ -154,7 +168,8 @@ class GameService
       game_data: {
         x: x,
         y: y
-      }
+      },
+      score: score
     )
   end
 end

@@ -45,7 +45,6 @@ var Game = {
     interval = setInterval(tick, 1000);
 
     function tick() {
-      console.log(remain_time);
       remain_time -= 1;
 
       if (remain_time <= 0) {
@@ -58,6 +57,8 @@ var Game = {
   play: function(response) {
     console.log(response);
     $('.game_board > .tiles:eq(' + response.game_data.x + ') > .tile:eq(' + response.game_data.y + ')').css('background', response.color);
+    $('#first_player > .score').text(response.score[0]);
+    $('#last_player > .score').text(response.score[1]);
   },
   finish: function(response) {
     this.changeStatus(response.status);

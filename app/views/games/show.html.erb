@@ -4,10 +4,10 @@ Id : <%= @game.id %> <br />
 
 <%# TODO: 한명만 있을땐 한명만 보이게 처리 %>
 <div class='player' id='first_player'>
-  Player 1 : <span class='player_id'><%= @game_player_ids.first %></span> <br />
+  Player 1 : <span class='player_id'><%= @game_player_ids.first %></span>, score : <span class='score'><%= @last_score['0'] %></span> <br />
 </div>
 <div class='player' id='last_player'>
-  Player 2 : <span class='player_id'><%= @game_player_ids.last %></span> <br />
+  Player 2 : <span class='player_id'><%= @game_player_ids.last %></span>, score : <span class='score'><%= @last_score['1'] %></span> <br />
 </div>
 
 <%# TODO: if game is full, hide below %>

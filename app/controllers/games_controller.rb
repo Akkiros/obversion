@@ -48,6 +48,9 @@ class GamesController < ApplicationController
     if @game.started? || @game.finished?
       @last_game_history = JSON.parse(@game.game_histories.last.game_data)
       @last_matrix = @last_game_history['matrix']
+      @last_score = @last_game_history['score']
+    else
+      @last_score = {'0' => 0, '1' => 0}
     end
   end
 
