@@ -1,5 +1,4 @@
 class GameService
-  # TODO: nil check 하나로 모으기
   def self.can_join?(game_id, player_id)
     game = Game.find_by(id: game_id)
     player = Player.find_by(id: player_id)
@@ -51,12 +50,20 @@ class GameService
     game = Game.find_by(id: game_id)
     player = Player.find_by(id: player_id)
 
+    if game.nil?
+      return [false, 'game is nil']
+    end
+
+    if player.nil?
+      return [false, 'player is nil']
+    end
+
     unless player.already_joined?(game_id)
       return [false, 'not joined this game']
     end
 
-    if game.started?
-      return [false, 'game is already started']
+    if game.started? || game.finished?
+      return [false, 'you can`t leave the game when started or finished']
     end
 
     return true
@@ -81,6 +88,14 @@ class GameService
     game = Game.find_by(id: game_id)
     player = Player.find_by(id: player_id)
 
+    if game.nil?
+      return [false, 'game is nil']
+    end
+
+    if player.nil?
+      return [false, 'player is nil']
+    end
+
     unless player.already_joined?(game_id)
       return [false, 'this player not joined this game']
     end
@@ -89,8 +104,8 @@ class GameService
       return [false, 'not full']
     end
 
-    if game.started?
-      return [false, 'this game is already started']
+    if game.started? || game.finished?
+      return [false, 'this game is already started or finished']
     end
 
     return true
@@ -109,13 +124,16 @@ class GameService
     QC::enqueue_in(60, "Game.finish", "#{game.id}")
   end
 
-  def self.can_click?(game_id, player_id)
+  def self.can_click?(game_id, player_id, x, y)
     game = Game.find_by(id: game_id)
     player = Player.find_by(id: player_id)
 
     if game.nil?
-      puts 'game is nil'
-      return
+      return [false, 'game is nil']
+    end
+
+    if player.nil?
+      return [false, 'player is nil']
     end
 
     unless player.already_joined?(game_id)
@@ -123,7 +141,12 @@ class GameService
     end
 
     unless game.started?
+      puts game.status
       return [false, 'game is not started']
+    end
+
+    if x.to_i >= GameConstant::MATRIX_SIZE || y.to_i >= GameConstant::MATRIX_SIZE
+      return [false, "can`t click more than #{GameConstant::MATRIX_SIZE}"]
     end
 
     return true

@@ -1,4 +1,6 @@
 class GameConstant
+  MATRIX_SIZE = 5
+
   STATUS_NEW = 'new'
   STATUS_JOINED = 'joined'
   STATUS_LEAVED = 'leaved'

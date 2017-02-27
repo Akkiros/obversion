@@ -70,7 +70,7 @@ class GamesController < ApplicationController
   end
 
   def click
-    result, message = GameService::can_click?(params[:game_id], session[:player_id])
+    result, message = GameService::can_click?(params[:game_id], session[:player_id], params[:x], params[:y])
     unless result
       return render json: {success: false, message: message}, status: 500
     end

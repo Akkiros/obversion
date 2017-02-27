@@ -76,7 +76,7 @@ class Game < ApplicationRecord
     self.game_histories.create(
       game_data: {
         status: GameConstant::STATUS_NEW,
-        matrix: Array.new(5){Array.new(5)}
+        matrix: Array.new(GameConstant::MATRIX_SIZE){Array.new(GameConstant::MATRIX_SIZE)}
       }.to_json
     )
   end
