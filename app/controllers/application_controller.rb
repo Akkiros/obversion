@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
   private
 
   def global_exception(e)
+    Rails.logger.error(e.backtrace)
     Rails.logger.error("Exception : #{e.message}")
     redirect_back(fallback_location: accounts_path)
   end

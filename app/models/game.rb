@@ -22,6 +22,10 @@ class Game < ApplicationRecord
     self.game_players.where(status: GameConstant::STATUS_JOINED).count == 2
   end
 
+  def new?
+    self.status == GameConstant::STATUS_NEW
+  end
+
   def started?
     self.status == GameConstant::STATUS_STARTED
   end
@@ -76,7 +80,8 @@ class Game < ApplicationRecord
     self.game_histories.create(
       game_data: {
         status: GameConstant::STATUS_NEW,
-        matrix: Array.new(GameConstant::MATRIX_SIZE){Array.new(GameConstant::MATRIX_SIZE)}
+        matrix: Array.new(GameConstant::MATRIX_SIZE){Array.new(GameConstant::MATRIX_SIZE)},
+        score: GameConstant::DEFAULT_SCORE
       }.to_json
     )
   end
