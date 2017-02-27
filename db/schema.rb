@@ -14,7 +14,6 @@ ActiveRecord::Schema.define(version: 20170225213330) do
 
   create_table "game_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.json     "game_data",  null: false
-    t.datetime "start_time", null: false
     t.integer  "game_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -32,9 +31,11 @@ ActiveRecord::Schema.define(version: 20170225213330) do
   end
 
   create_table "games", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "status",     limit: 16, default: "", null: false
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.string   "title",      limit: 16, default: "",    null: false
+    t.string   "status",     limit: 16, default: "new", null: false
+    t.datetime "start_time"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   create_table "players", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
