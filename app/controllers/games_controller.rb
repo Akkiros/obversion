@@ -14,6 +14,7 @@ class GamesController < ApplicationController
     game = Game.new(title: params[:games][:title], status: GameConstant::STATUS_NEW)
     unless game.valid?
       flash[:notice] = game.errors.full_messages
+      return redirect_to games_new_path
     end
 
     if game.save
@@ -36,7 +37,7 @@ class GamesController < ApplicationController
     result, message = GameService::can_leave?(params[:game_id], session[:player_id])
     unless result
       flash[:notice] = message
-      return
+      return redirect_to games_path
     end
 
     GameService::leave(params[:game_id], session[:player_id])
@@ -46,7 +47,6 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find_by(id: params[:game_id])
-
     @game_player_ids = @game.active_player_ids
 
     # game is started or finished load data
@@ -63,7 +63,7 @@ class GamesController < ApplicationController
     result, message = GameService::can_start?(params[:game_id], session[:player_id])
     unless result
       flash[:notice] = message
-      return
+      return redirect_back(fallback_location: games_path)
     end
 
     GameService::start(params[:game_id])
