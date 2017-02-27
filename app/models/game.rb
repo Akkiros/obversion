@@ -1,4 +1,6 @@
 class Game < ApplicationRecord
+  after_create :init_game_history
+
   has_many :game_players
   has_many :players, through: :game_players
   has_many :game_histories
@@ -23,12 +25,6 @@ class Game < ApplicationRecord
 
   def start
     self.update(status: GameConstant::STATUS_STARTED)
-    self.game_histories.create(
-      game_data: {
-        status: GameConstant::STATUS_STARTED
-      },
-      start_time: Time.now
-    )
   end
 
   def active_player_count
@@ -48,6 +44,18 @@ class Game < ApplicationRecord
     ActionCable.server.broadcast(
       "games/#{game_id}",
       status: GameConstant::STATUS_FINISHED,
+    )
+  end
+
+  private
+
+  def init_game_history
+    self.game_histories.create(
+      start_time: Time.now,
+      game_data: {
+        status: GameConstant::STATUS_NEW,
+        matrix: Array.new(5){Array.new(5)}
+      }.to_json
     )
   end
 end

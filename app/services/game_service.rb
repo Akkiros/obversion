@@ -131,7 +131,21 @@ class GameService
 
   def self.click(game_id, player_id, x, y)
     game = Game.find_by(id: game_id)
-    color = game.active_player_ids.index(player_id) == 0 ? GameConstant::COLOR_RED : GameConstant::COLOR_BLUE
+
+    color_key = game.active_player_ids.index(player_id)
+    color = GameConstant::COLOR_KEY[color_key]
+
+    last_game_history = game.game_histories.last
+    new_matrix = JSON.parse(last_game_history.game_data)['matrix']
+    new_matrix[x.to_i][y.to_i] = color_key
+
+    game.game_histories.create(
+      start_time: last_game_history.start_time,
+      game_data: {
+        status: GameConstant::STATUS_PLAYING,
+        matrix: new_matrix
+      }.to_json
+    )
 
     ActionCable.server.broadcast(
       "games/#{game.id}",

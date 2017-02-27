@@ -28,5 +28,24 @@ Id : <%= @game.id %> <br />
 <% end %>
 <%= hidden_field_tag 'game_id', @game.id %>
 
-<div class='game_board'>
+<% if @game.started? || @game.finished? %>
+  <div class='game_borad'>
+    <% @last_matrix[0].length.times do |i| %>
+      <div class='tiles' style='display: flex;'>
+      <% @last_matrix[0].length.times do |j| %>
+        <% if @last_matrix[i][j] == 0 %>
+          <% color = 'red' %>
+        <% elsif @last_matrix[i][j] == 1 %>
+          <% color = 'blue' %>
+        <% else %>
+          <% color = 'black' %>
+        <% end %>
+        <div class='tile' style="width: 20px; height: 20px; background: <%= color %>; display: inline-block;" data-x=<%=i%> data-y=<%=j%>></div>
+      <% end %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class='game_board'>
+<% end %>
 </div>

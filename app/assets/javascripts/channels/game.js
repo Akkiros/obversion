@@ -2,7 +2,7 @@ var Game = {
   init: function() {
     console.log('init');
 
-    var game_size = 10;
+    var game_size = 5;
     var game_data = '';
 
     for (var i = 0; i < game_size; i++) {

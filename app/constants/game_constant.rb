@@ -8,4 +8,5 @@ class GameConstant
 
   COLOR_RED = 'red'
   COLOR_BLUE = 'blue'
+  COLOR_KEY = [self::COLOR_RED, self::COLOR_BLUE]
 end

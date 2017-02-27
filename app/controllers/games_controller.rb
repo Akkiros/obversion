@@ -44,7 +44,11 @@ class GamesController < ApplicationController
 
     @game_player_ids = @game.active_player_ids
 
-    # TODO: if game status is started, pass game_data from game_histories
+    # game is started or finished load data
+    if @game.started? || @game.finished?
+      @last_game_history = JSON.parse(@game.game_histories.last.game_data)
+      @last_matrix = @last_game_history['matrix']
+    end
   end
 
   def start
