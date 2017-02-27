@@ -50,7 +50,7 @@ class GameService
     game = Game.find_by(id: game_id)
     player = Player.find_by(id: player_id)
 
-    unless game.already_joined?(game_id)
+    unless player.already_joined?(game_id)
       return [false, 'not joined this game']
     end
 
