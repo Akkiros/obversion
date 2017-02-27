@@ -5,8 +5,18 @@ class Game < ApplicationRecord
   has_many :players, through: :game_players
   has_many :game_histories
 
-  validates :title, presence: true, length: { maximum: 16 }
-  validates :status, presence: true, length: { maximum: 16 }
+  validates :title,
+    presence: true,
+    length: {
+      maximum: 16,
+      too_long: 'title is less than 16 charactor'
+    }
+  validates :status,
+    presence: true,
+    length: {
+      maximum: 16,
+      too_long: 'title is less than 16 charactor'
+    }
 
   def full?
     self.game_players.where(status: GameConstant::STATUS_JOINED).count == 2
