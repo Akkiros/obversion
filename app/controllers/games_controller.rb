@@ -48,6 +48,7 @@ class GamesController < ApplicationController
   def show
     @game = Game.find_by(id: params[:game_id])
     @game_player_ids = @game.active_player_ids
+    @game_player_ids = @game_player_ids.count < 2 ? [@game_player_ids.first, 'not yet'] : @game_player_ids
 
     # game is started or finished load data
     if @game.started? || @game.finished?
