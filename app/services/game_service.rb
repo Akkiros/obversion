@@ -140,13 +140,14 @@ class GameService
     new_matrix[x.to_i][y.to_i] = color_key
 
     score = {
-      '0': 0,
-      '1': 0
+      '0' => 0,
+      '1' => 0
     }
+
     new_matrix.count.times do |i|
       new_matrix.count.times do |j|
-        score[0.to_s.to_sym] += 1 if new_matrix[i][j] == 0
-        score[1.to_s.to_sym] += 1 if new_matrix[i][j] == 1
+        score['0'] += 1 if new_matrix[i][j] == 0
+        score['1'] += 1 if new_matrix[i][j] == 1
       end
     end
 

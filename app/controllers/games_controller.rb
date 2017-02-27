@@ -55,7 +55,7 @@ class GamesController < ApplicationController
       @last_matrix = @last_game_history['matrix']
       @last_score = @last_game_history['score']
     else
-      @last_score = {'0' => 0, '1' => 0}
+      @last_score = GameConstant::DEFAULT_SCORE
     end
   end
 
@@ -72,7 +72,6 @@ class GamesController < ApplicationController
   def click
     result, message = GameService::can_click?(params[:game_id], session[:player_id])
     unless result
-      flash[:notice] = message
       return render json: {success: false, message: message}, status: 500
     end
 
