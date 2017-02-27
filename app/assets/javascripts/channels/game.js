@@ -21,6 +21,7 @@ var Game = {
     if (response.current_player_count == 1) {
       $('#first_player > .player_id').text(response.player_id);
     } else {
+      $('.join_game').prop('disabled', true);
       $('#last_player > .player_id').text(response.player_id);
     }
   },
@@ -31,6 +32,7 @@ var Game = {
     if (response.current_player_count == 1) {
       $('#first_player > .player_id').text(response.active_player_ids[0]);
       $('#last_player > .player_id').text('not yet');
+      $('.join_game').prop('disabled', false);
     }
   },
   start: function(response) {
