@@ -41,7 +41,7 @@ class GameService
     ActionCable.server.broadcast(
       "games/#{game.id}",
       status: GameConstant::STATUS_JOINED,
-      player_id: player.id,
+      player_id: player_id,
       current_player_count: game.active_player_count
     )
   end
