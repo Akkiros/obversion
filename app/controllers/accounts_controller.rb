@@ -1,5 +1,6 @@
 class AccountsController < ApplicationController
   before_action :encrypt_password, only: [:create, :login]
+  before_action :prohibit_logined_player, except: [:logout]
 
   def index
   end

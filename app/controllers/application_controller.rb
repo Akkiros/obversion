@@ -15,6 +15,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def prohibit_logined_player
+    if session[:player_id]
+      return redirect_to games_path
+    end
+  end
+
   private
 
   def global_exception(e)
