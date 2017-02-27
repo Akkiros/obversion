@@ -1,7 +1,5 @@
 var Game = {
   init: function() {
-    console.log('init');
-
     var game_size = 5;
     var game_data = '';
 
@@ -16,8 +14,6 @@ var Game = {
     $('.game_board').append(game_data);
   },
   join: function(response) {
-    console.log('joined');
-
     if (response.current_player_count == 1) {
       $('#first_player > .player_id').text(response.player_id);
       $('#last_player > .player_id').text('not yet');
@@ -27,8 +23,6 @@ var Game = {
     }
   },
   leave: function(response) {
-    console.log('leaved');
-
     // 0명일땐 방 폭파
     if (response.current_player_count == 1) {
       $('#first_player > .player_id').text(response.active_player_ids[0]);
@@ -37,8 +31,6 @@ var Game = {
     }
   },
   start: function(response) {
-    console.log('started');
-
     this.changeStatus(response.status);
 
     $('.join_game').prop('disabled', true);
@@ -62,24 +54,26 @@ var Game = {
     }
   },
   play: function(response) {
-    console.log(response);
-
     $('.game_board > .tiles:eq(' + response.game_data.x + ') > .tile:eq(' + response.game_data.y + ')').css('background', response.color);
     $('#first_player > .score').text(response.score[0]);
     $('#last_player > .score').text(response.score[1]);
   },
   finish: function(response) {
     this.changeStatus(response.status);
+    $('#fisrt_player > .score').text(response.score[0]);
+    $('#second_player > .score').text(response.score[0]);
+    $('.winner').text('winner : ' + response.winner);
   },
   changeStatus: function(game_status) {
     $('#status > span').text(game_status);
   }
 }
 
-Game.init();
+if ($('#status > span').text() == 'new') {
+  Game.init();
+}
 
 $('.game_board > .tiles > .tile').click(function() {
-  console.log(this);
   var _this = this;
   $.ajax({
     method: 'POST',
@@ -91,7 +85,6 @@ $('.game_board > .tiles > .tile').click(function() {
     },
     // fail 체크
     success: function(response) {
-      console.log(response);
     }
   });
 });
@@ -103,9 +96,6 @@ App.messages = App.cable.subscriptions.create(
   },
   {
     received: function(data) {
-      console.log('received');
-      console.log(data);
-
       if (data.status === 'joined') {
         Game.join(data);
       } else if (data.status === 'leaved') {

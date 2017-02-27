@@ -25,7 +25,7 @@ class Game < ApplicationRecord
   end
 
   def start
-    self.update(status: GameConstant::STATUS_STARTED)
+    self.update(status: GameConstant::STATUS_STARTED, start_time: Time.now)
   end
 
   def active_player_count
@@ -42,9 +42,21 @@ class Game < ApplicationRecord
   def self.finish(game_id)
     game = Game.find_by(id: game_id)
     game.update(status: GameConstant::STATUS_FINISHED)
+
+    score = JSON.parse(game.game_histories.last.game_data)['score']
+
+    if score['0'] == score['1']
+      winner_player_username = 'DRAW'
+    else
+      winner_player_index = score['0'] < score['1'] ? 1 : 0
+      winner_player_username = Player.find_by(id: game.active_player_ids[winner_player_index]).username
+    end
+
     ActionCable.server.broadcast(
       "games/#{game_id}",
       status: GameConstant::STATUS_FINISHED,
+      score: score,
+      winner: winner_player_username
     )
   end
 

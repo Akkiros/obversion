@@ -112,7 +112,6 @@ class GameService
     game = Game.find_by(id: game_id)
     player = Player.find_by(id: player_id)
 
-    # TODO: 상태 체크
     if game.nil?
       puts 'game is nil'
       return
