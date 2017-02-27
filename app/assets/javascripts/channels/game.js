@@ -15,18 +15,17 @@ var Game = {
   },
   join: function(response) {
     if (response.current_player_count == 1) {
-      $('#first_player > .player_id').text(response.player_id);
-      $('#last_player > .player_id').text('not yet');
+      this.setPlayerId(0, response.player_id);
+      this.setPlayerId(1, 'not yet');
     } else {
       $('.join_game').prop('disabled', true);
-      $('#last_player > .player_id').text(response.player_id);
+      this.setPlayerId(1, response.player_id);
     }
   },
   leave: function(response) {
-    // 0명일땐 방 폭파
     if (response.current_player_count == 1) {
-      $('#first_player > .player_id').text(response.active_player_ids[0]);
-      $('#last_player > .player_id').text('not yet');
+      this.setPlayerId(0, response.active_player_ids[0]);
+      this.setPlayerId(1, 'not yet');
       $('.join_game').prop('disabled', false);
     }
   },
@@ -54,18 +53,36 @@ var Game = {
     }
   },
   play: function(response) {
-    $('.game_board > .tiles:eq(' + response.game_data.x + ') > .tile:eq(' + response.game_data.y + ')').css('background', response.color);
-    $('#first_player > .score').text(response.score[0]);
-    $('#last_player > .score').text(response.score[1]);
+    $('.game_board > .tiles:eq(' + response.game_data.x + ') > .tile:eq(' + response.game_data.y + ')')
+        .css('background', response.color);
+
+    this.setPlayerScore(0, response.score[0]);
+    this.setPlayerScore(1, response.score[1]);
   },
   finish: function(response) {
     this.changeStatus(response.status);
-    $('#fisrt_player > .score').text(response.score[0]);
-    $('#second_player > .score').text(response.score[0]);
+
+    this.setPlayerScore(0, response.score[0]);
+    this.setPlayerScore(1, response.score[1]);
+
     $('.winner').text('winner : ' + response.winner);
   },
   changeStatus: function(game_status) {
     $('#status > span').text(game_status);
+  },
+  setPlayerId: function(order, player_id) {
+    if (order == 0) {
+      $('#first_player > .player_id').text(player_id);
+    } else {
+      $('#last_player > .player_id').text(player_id);
+    }
+  },
+  setPlayerScore: function(order, score) {
+    if (order == 0) {
+      $('#first_player > .score').text(score);
+    } else {
+      $('#last_player > .score').text(score);
+    }
   }
 }
 
