@@ -11,4 +11,9 @@
     <%= yield %>
   </body>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <% if flash[:notice] %>
+    <script>
+      alert("<%= flash[:notice] %>");
+    </script>
+  <% end %>
 </html>

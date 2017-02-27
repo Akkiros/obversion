@@ -11,16 +11,19 @@ class GamesController < ApplicationController
   def create
     # TODO: get topic when create
     game = Game.new(status: GameConstant::STATUS_NEW)
+    unless game.valid?
+      flash[:notice] = game.errors.messages
+    end
+
     if game.save
       return redirect_to action: 'show', game_id: game.id
     end
-
-    # TODO: if has error, set flash notice
   end
 
   def join
-    result, redirection_path = GameService::can_join?(params[:game_id], session[:player_id])
+    result, message, redirection_path = GameService::can_join?(params[:game_id], session[:player_id])
     unless result
+      flash[:notice] = message
       return redirect_to redirection_path
     end
 
@@ -30,7 +33,7 @@ class GamesController < ApplicationController
   def leave
     result, message = GameService::can_leave?(params[:game_id], session[:player_id])
     unless result
-      puts message
+      flash[:notice] = message
       return
     end
 
@@ -57,7 +60,7 @@ class GamesController < ApplicationController
   def start
     result, message = GameService::can_start?(params[:game_id], session[:player_id])
     unless result
-      puts message
+      flash[:notice] = message
       return
     end
 
@@ -67,7 +70,7 @@ class GamesController < ApplicationController
   def click
     result, message = GameService::can_click?(params[:game_id], session[:player_id])
     unless result
-      puts message
+      flash[:notice] = message
       return
     end
 

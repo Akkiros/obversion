@@ -16,8 +16,7 @@ class AccountsController < ApplicationController
       return redirect_to games_path
     end
 
-    puts player.errors.messages
-    # TODO: flash notice error message
+    flash[:notice] = player.errors.messages
     return redirect_back(fallback_location: accounts_new_path)
   end
 
@@ -25,13 +24,12 @@ class AccountsController < ApplicationController
     player = Player.find_by(username: params[:accounts][:username])
 
     if player.nil?
-      puts 'player is nil'
-      # TODO: flash notice error message
+      flash[:notice] = 'player is nil'
       return redirect_to action: 'index'
     end
 
     unless player.password == params[:accounts][:password]
-      puts 'password is not matched'
+      flash[:notice] = 'password is not matched'
       return redirect_to action: 'index'
     end
 
