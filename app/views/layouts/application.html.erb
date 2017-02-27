@@ -8,6 +8,14 @@
   </head>
 
   <body>
+    <% if session[:player_id] %>
+      <%= Player.find(session[:player_id]).username %>
+      <%= link_to 'logout', accounts_logout_path %>
+    <% else %>
+      <%= link_to 'login', accounts_path %>
+    <% end %>
+    <hr>
+    <br />
     <%= yield %>
   </body>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
