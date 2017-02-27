@@ -14,18 +14,28 @@ Title : <%= @game.title %> <br />
 </div>
 
 <%= form_tag games_join_path do %>
+  <% unless @game.new? && !@game.full? %>
+    <% option = 'disabled' %>
+  <% end %>
   <%= hidden_field_tag 'game_id', @game.id %>
-  <%= submit_tag 'join', class: 'join_game' %>
+
+  <%= submit_tag 'join', class: 'join_game', disabled: option %>
 <% end %>
 
 <%= form_tag games_start_path do %>
+  <% unless @game.new? %>
+    <% option = 'disabled' %>
+  <% end %>
   <%= hidden_field_tag 'game_id', @game.id %>
-  <%= submit_tag 'game start', class: 'start_game' %>
+  <%= submit_tag 'game start', class: 'start_game', disabled: option %>
 <% end %>
 
 <%= form_tag games_leave_path do %>
+  <% unless @game.new? %>
+    <% option = 'disabled' %>
+  <% end %>
   <%= hidden_field_tag 'game_id', @game.id %>
-  <%= submit_tag 'game leave', class: 'leave_game' %>
+  <%= submit_tag 'game leave', class: 'leave_game', disabled: option %>
 <% end %>
 
 <%= hidden_field_tag 'game_id', @game.id %>
