@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get '/accounts/new' => 'accounts#new'
   post '/accounts/create' => 'accounts#create'
   post '/accounts/login' => 'accounts#login'
-  get '/accounts/logout' => 'accounts#new'
+  get '/accounts/logout' => 'accounts#logout'
 
   get '/games/' => 'games#index'
   get '/games/new' => 'games#new'
