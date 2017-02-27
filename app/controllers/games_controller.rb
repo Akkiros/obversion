@@ -12,10 +12,11 @@ class GamesController < ApplicationController
     # TODO: get topic when create
     game = Game.new(status: GameConstant::STATUS_NEW)
     unless game.valid?
-      flash[:notice] = game.errors.messages
+      flash[:notice] = game.errors.full_messages
     end
 
     if game.save
+      GameService::join(game.id, session[:player_id])
       return redirect_to action: 'show', game_id: game.id
     end
   end
@@ -37,7 +38,7 @@ class GamesController < ApplicationController
       return
     end
 
-    GameService::leave(game_id, player_id)
+    GameService::leave(params[:game_id], session[:player_id])
 
     redirect_to games_path
   end
