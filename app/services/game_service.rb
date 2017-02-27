@@ -153,7 +153,6 @@ class GameService
     puts score
 
     game.game_histories.create(
-      start_time: last_game_history.start_time,
       game_data: {
         status: GameConstant::STATUS_PLAYING,
         matrix: new_matrix,

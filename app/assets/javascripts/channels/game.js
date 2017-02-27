@@ -20,6 +20,7 @@ var Game = {
 
     if (response.current_player_count == 1) {
       $('#first_player > .player_id').text(response.player_id);
+      $('#last_player > .player_id').text('not yet');
     } else {
       $('.join_game').prop('disabled', true);
       $('#last_player > .player_id').text(response.player_id);
@@ -104,6 +105,7 @@ App.messages = App.cable.subscriptions.create(
     received: function(data) {
       console.log('received');
       console.log(data);
+
       if (data.status === 'joined') {
         Game.join(data);
       } else if (data.status === 'leaved') {

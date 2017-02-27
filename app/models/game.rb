@@ -51,7 +51,6 @@ class Game < ApplicationRecord
 
   def init_game_history
     self.game_histories.create(
-      start_time: Time.now,
       game_data: {
         status: GameConstant::STATUS_NEW,
         matrix: Array.new(5){Array.new(5)}
