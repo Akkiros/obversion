@@ -3,30 +3,31 @@ class GameService
   def self.can_join?(game_id, player_id)
     game = Game.find_by(id: game_id)
     player = Player.find_by(id: player_id)
+    url_helpers = Rails.application.routes.url_helpers
 
     if game.nil?
       puts 'game is not found' 
-      return [false, 'game is not found',  Rails.application.routes.url_helpers.games_path]
+      return [false, 'game is not found',  url_helpers.games_path]
     end
 
     if player.nil?
       puts 'player is not found'
-      return [false, 'player is not found', Rails.application.routes.url_helpers.accounts_path]
+      return [false, 'player is not found', url_helpers.accounts_path]
     end
 
     if player.already_joined?(game.id)
       puts 'player already joined'
-      return [false, 'player already joined', Rails.application.routes.url_helpers.games_path]
+      return [false, 'player already joined', url_helpers.games_path]
     end
 
     if game.full?
       puts 'full'
-      return [false, 'this game is full', Rails.application.routes.url_helpers.games_path]
+      return [false, 'this game is full', url_helpers.games_path]
     end
 
     if game.started?
       puts 'started'
-      return [false, 'this game already started', Rails.application.routes.url_helpers.games_path]
+      return [false, 'this game already started', url_helpers.games_path]
     end
 
     return true
@@ -148,8 +149,6 @@ class GameService
         score[1.to_s.to_sym] += 1 if new_matrix[i][j] == 1
       end
     end
-
-    puts score
 
     game.game_histories.create(
       game_data: {
