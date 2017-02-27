@@ -2,15 +2,14 @@ require 'queue_classic'
 
 class GamesController < ApplicationController
   def index
-    @games = Game.all
+    @games = Game.where(status: GameConstant::STATUS_NEW)
   end
 
   def new
   end
 
   def create
-    # TODO: get topic when create
-    game = Game.new(status: GameConstant::STATUS_NEW)
+    game = Game.new(title: params[:games][:title], status: GameConstant::STATUS_NEW)
     unless game.valid?
       flash[:notice] = game.errors.full_messages
     end
