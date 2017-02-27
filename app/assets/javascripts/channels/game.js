@@ -84,7 +84,7 @@ $('.game_board > .tiles > .tile').click(function() {
       y: $(_this).data('y')
     },
     error: function(response) {
-      alert(response.message);
+      alert(JSON.parse(response.responseText).message);
     }
   });
 });
