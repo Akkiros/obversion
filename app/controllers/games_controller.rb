@@ -1,6 +1,8 @@
 require 'queue_classic'
 
 class GamesController < ApplicationController
+  before_action :require_login
+
   def index
     @games = Game.where(status: GameConstant::STATUS_NEW)
   end
