@@ -13,18 +13,18 @@ Id : <%= @game.id %> <br />
 <%# TODO: if game is full, hide below %>
 <%= form_tag games_join_path do %>
   <%= hidden_field_tag 'game_id', @game.id %>
-  <%= submit_tag 'join' %>
+  <%= submit_tag 'join', class: 'join_game' %>
 <% end %>
 
 <%# TODO: if game is not full, disable this %>
 <%= form_tag games_start_path do %>
   <%= hidden_field_tag 'game_id', @game.id %>
-  <%= submit_tag 'game start' %>
+  <%= submit_tag 'game start', class: 'start_game' %>
 <% end %>
 
 <%= form_tag games_leave_path do %>
   <%= hidden_field_tag 'game_id', @game.id %>
-  <%= submit_tag 'game leave' %>
+  <%= submit_tag 'game leave', class: 'leave_game' %>
 <% end %>
 <%= hidden_field_tag 'game_id', @game.id %>
 

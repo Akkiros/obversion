@@ -38,6 +38,10 @@ var Game = {
 
     this.changeStatus(response.status);
 
+    $('.join_game').prop('disabled', true);
+    $('.start_game').prop('disabled', true);
+    $('.leave_game').prop('disabled', true);
+
     remain_time = response.remain_time;
     $('#remain_time > #count').text(remain_time);
 
@@ -56,6 +60,7 @@ var Game = {
   },
   play: function(response) {
     console.log(response);
+
     $('.game_board > .tiles:eq(' + response.game_data.x + ') > .tile:eq(' + response.game_data.y + ')').css('background', response.color);
     $('#first_player > .score').text(response.score[0]);
     $('#last_player > .score').text(response.score[1]);
