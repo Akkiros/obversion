@@ -73,7 +73,7 @@ class GamesController < ApplicationController
     result, message = GameService::can_click?(params[:game_id], session[:player_id])
     unless result
       flash[:notice] = message
-      return
+      return render json: {success: false, message: message}, status: 500
     end
 
     GameService::click(params[:game_id], session[:player_id], params[:x], params[:y])

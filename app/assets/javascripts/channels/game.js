@@ -83,8 +83,8 @@ $('.game_board > .tiles > .tile').click(function() {
       x: $(_this).data('x'),
       y: $(_this).data('y')
     },
-    // fail 체크
-    success: function(response) {
+    error: function(response) {
+      alert(response.message);
     }
   });
 });
