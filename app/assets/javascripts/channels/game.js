@@ -101,7 +101,12 @@ $('.game_board > .tiles > .tile').click(function() {
       y: $(_this).data('y')
     },
     error: function(response) {
-      alert(JSON.parse(response.responseText).message);
+      swal({
+        title: 'Error!',
+        text: JSON.parse(response.responseText).message,
+        type: 'error',
+        confirmButtonText: 'I Got It'
+      });
     }
   });
 });
