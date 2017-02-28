@@ -53,6 +53,19 @@ class Game < ApplicationRecord
     }
   end
 
+  def self.tick(game_id)
+    game = Game.find_by(id: game_id)
+
+    60.times.reverse_each do |t|
+      ActionCable.server.broadcast(
+        "games/#{game_id}",
+        status: 'tick',
+        remain_time: t
+      )
+      sleep(1)
+    end
+  end
+
   def self.finish(game_id)
     game = Game.find_by(id: game_id)
     game.update(status: GameConstant::STATUS_FINISHED)

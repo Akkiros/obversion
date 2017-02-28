@@ -121,6 +121,7 @@ class GameService
       remain_time: 60
     )
 
+    QC::enqueue("Game.tick", "#{game_id}")
     QC::enqueue_in(60, "Game.finish", "#{game.id}")
   end
 

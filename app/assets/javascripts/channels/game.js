@@ -38,19 +38,6 @@ var Game = {
 
     remain_time = response.remain_time;
     $('#remain_time > #count').text(remain_time);
-
-    // TODO : 이 부분 서버로 이동
-    interval = setInterval(tick, 1000);
-
-    function tick() {
-      remain_time -= 1;
-
-      if (remain_time <= 0) {
-        clearInterval(interval);
-      }
-
-      $('#remain_time > #count').text(remain_time);
-    }
   },
   play: function(response) {
     $('.game_board > .tiles:eq(' + response.game_data.x + ') > .tile:eq(' + response.game_data.y + ')')
@@ -58,6 +45,9 @@ var Game = {
 
     this.setPlayerScore(0, response.score[0]);
     this.setPlayerScore(1, response.score[1]);
+  },
+  tick: function(response) {
+    $('#remain_time > #count').text(response.remain_time);
   },
   finish: function(response) {
     this.changeStatus(response.status);
@@ -126,6 +116,8 @@ App.messages = App.cable.subscriptions.create(
         Game.start(data);
       } else if (data.status === 'playing') {
         Game.play(data);
+      } else if (data.status === 'tick') {
+        Game.tick(data);
       } else if (data.status === 'finished') {
         Game.finish(data);
       } else {
