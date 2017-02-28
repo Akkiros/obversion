@@ -48,6 +48,7 @@ var Game = {
   },
   tick: function(response) {
     $('#remain_time > #count').text(response.remain_time);
+    $('.progress > .progress-bar').css('width', Number(response.remain_time) / 60 * 100 + '%');
   },
   finish: function(response) {
     this.changeStatus(response.status);

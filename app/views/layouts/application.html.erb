@@ -11,15 +11,16 @@
   </head>
 
   <body>
-    <% if session[:player_id] %>
-      <%= Player.find(session[:player_id]).username %>
-      <%= link_to 'logout', accounts_logout_path %>
-    <% else %>
-      <%= link_to 'login', accounts_path %>
-    <% end %>
-    <hr>
-    <br />
-    <%= yield %>
+    <nav class="navbar navbar-light bg-faded">
+      <% if session[:player_id] %>
+        <%= link_to 'logout', accounts_logout_path %>
+      <% else %>
+        <%= link_to 'login', accounts_path %>
+      <% end %>
+    </nav>
+    <div class='container'>
+      <%= yield %>
+    </div>
   </body>
   <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   <% unless flash[:notice].nil? %>

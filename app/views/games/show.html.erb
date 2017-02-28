@@ -1,7 +1,10 @@
 Id : <%= @game.id %> <br />
 Title : <%= @game.title %> <br />
-<div id='status'>Status : <span><%= @game.status %></div></div> <br />
+<div id='status'>Status : <span><%= @game.status %></div> <br />
 <div id='remain_time'>Remain Time : <span id='count'></span></div>
+<div class='progress'>
+  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
 
 <div class='player' id='first_player'>
   Player 1 : <span class='player_id'><%= @game_player_ids.first %></span>, score : <span class='score'><%= @last_score['0'] %></span> <br />
@@ -13,29 +16,29 @@ Title : <%= @game.title %> <br />
 <div class='winner'>
 </div>
 
-<%= form_tag games_join_path do %>
+<%= form_tag games_join_path, style: 'display: inline-block;' do %>
   <% unless @game.new? && !@game.full? %>
     <% option = 'disabled' %>
   <% end %>
   <%= hidden_field_tag 'game_id', @game.id %>
 
-  <%= submit_tag 'join', class: 'join_game', disabled: option %>
+  <%= submit_tag 'join', class: 'join_game', disabled: option, class: 'btn btn-outline-success btn-lg' %>
 <% end %>
 
-<%= form_tag games_start_path do %>
+<%= form_tag games_start_path, style: 'display: inline-block;' do %>
   <% unless @game.new? %>
     <% option = 'disabled' %>
   <% end %>
   <%= hidden_field_tag 'game_id', @game.id %>
-  <%= submit_tag 'game start', class: 'start_game', disabled: option %>
+  <%= submit_tag 'game start', class: 'start_game', disabled: option, class: 'btn btn-outline-info btn-lg' %>
 <% end %>
 
-<%= form_tag games_leave_path do %>
+<%= form_tag games_leave_path, style: 'display: inline-block;' do %>
   <% unless @game.new? %>
     <% option = 'disabled' %>
   <% end %>
   <%= hidden_field_tag 'game_id', @game.id %>
-  <%= submit_tag 'game leave', class: 'leave_game', disabled: option %>
+  <%= submit_tag 'game leave', class: 'leave_game', disabled: option, class: 'btn btn-outline-warning btn-lg' %>
 <% end %>
 
 <%= hidden_field_tag 'game_id', @game.id %>
